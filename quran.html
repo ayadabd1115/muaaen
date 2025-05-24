@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>القرآن الكريم</title>
+  <style>
+    @font-face {
+  font-family: 'MyQuranFont';
+  src: url('uthmanic_hafs_v22.ttf') format('truetype');
+}
+
+    body {
+      font-family: 'Amiri', serif;
+      background-color: #f5f5f5;
+      color: #222;
+      padding: 20px;
+      margin: 0;
+      transition: background 0.3s, color 0.3s;
+      text-align: center;
+      direction: rtl;
+     
+    }
+    body.dark {
+      background-color: #1c1c1c;
+      color: #e0e0e0;
+    }
+    h2 { margin-bottom: 10px; }
+    .controls {
+      margin-bottom: 15px;
+    }
+    select, input[type="text"], button {
+      font-size: 1rem;
+      padding: 5px 10px;
+      margin: 5px;
+    }
+   .ayah {
+  font-family: 'MyQuranFont', serif;
+  font-size: 1.5rem;
+  line-height: 2;
+  margin: 10px 0;
+  position: relative;
+  padding-inline-end: 50px;
+}
+.ayah-number {
+  display: inline-block;
+  margin-right: 8px;
+  background: #ccc;
+  color: #000;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  width: 28px;
+  height: 28px;
+  text-align: center;
+  line-height: 28px;
+  font-weight: bold;
+  direction: ltr;
+}
+
+    .highlight {
+      background: yellow;
+      color: black;
+    }
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .search-results {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+    }
+    .search-results h3 {
+      margin-top: 0;
+    }
+    .result-item {
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+    }
+    .result-item:hover {
+      background: #f0f0f0;
+    }
+    #closeResults {
+      float: left;
+      background: crimson;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    /* إضافة تنسيق الشِّيدة (Card) */
+.center-card {
+  position: fixed; /* لتبقى وسط الشاشة دائما */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+  text-align: center;
+  width: 220px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  z-index: 10000; /* فوق كل شيء */
+}
+.center-card:hover {
+  box-shadow: 0 12px 24px rgba(0,0,0,0.35);
+}
+.center-card .icon {
+  font-size: 48px;
+  color: #3498db;
+  margin-bottom: 15px;
+}
+.center-card .label {
+  font-size: 18px;
+  color: #333;
+}
+
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <h2>📖 القرآن الكريم</h2>
+    <div class="controls">
+      <label>السورة:</label>
+      <select id="suraSelect"></select>
+      <input type="text" id="searchInput" placeholder="🔍 أدخل كلمة..." />
+      <label><input type="checkbox" id="searchAll" /> بحث في كل السور</label>
+      <button onclick="performSearch()">🔍 بحث</button>
+      <button onclick="toggleDarkMode()">🌙/☀️</button>
+      <button onclick="changeFontSize(1)">🔠+</button>
+      <button onclick="changeFontSize(-1)">🔠−</button>
+    </div>
+  </div>
+
+  <div id="searchResults" class="search-results" style="display:none;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h3>نتائج البحث:</h3>
+      <button id="closeResults" onclick="closeResults()">✖ إغلاق</button>
+    </div>
+    <div id="resultsContainer"></div>
+  </div>
+
+  <div id="ayahContainer"></div>
+  <div id="centerCard" class="center-card" style="display:none;" onclick="closeCenterCard()">
+  <div class="icon">📖</div>
+  <div class="label">القرآن الكريم</div>
+</div>
+
+<script>
+ 
+  let quranData = [];
+  let currentFontSize = 1.5;
+  let selectedSuraIndex = 0;
+
+  // تحميل بيانات القرآن
+  fetch('quran.json')
+    .then(res => res.json())
+    .then(data => {
+      quranData = data;
+      const select = document.getElementById('suraSelect');
+      quranData.forEach((sura, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = sura.name;
+        select.appendChild(option);
+      });
+      select.addEventListener('change', () => {
+        selectedSuraIndex = Number(select.value);
+        displaySura(selectedSuraIndex);
+      });
+      select.selectedIndex = 0;
+      displaySura(0);
+    });
+
+  // إزالة التشكيل من النص للمطابقة
+  function removeTashkeel(text) {
+    return text.normalize("NFD").replace(/[\u064B-\u065F\u0610-\u061A\u06D6-\u06ED]/g, "");
+  }
+
+  // عرض السورة المحددة مع تظليل و رقم الآية
+  function displaySura(index, highlightWord = '') {
+    const container = document.getElementById('ayahContainer');
+    container.innerHTML = '';
+    quranData[index].verses.forEach(verse => {
+      const div = document.createElement('div');
+      div.className = 'ayah';
+      div.style.fontSize = currentFontSize + 'rem';
+
+      const original = verse.text;
+      const ayahNumber = `<span class="ayah-number">${verse.id}</span>`;
+
+      if (highlightWord && removeTashkeel(original).includes(removeTashkeel(highlightWord))) {
+        const plain = removeTashkeel(original);
+        const keyword = removeTashkeel(highlightWord);
+        const indexStart = plain.indexOf(keyword);
+
+        if (indexStart !== -1) {
+          let count = 0, opened = false, highlighted = '';
+          for (let i = 0; i < original.length; i++) {
+            const char = original[i];
+            if (/[\u0621-\u064A]/.test(char)) count++;
+            if (count === indexStart + 1 && !opened) {
+              highlighted += '<span class="highlight">';
+              opened = true;
+            }
+            highlighted += char;
+            if (count === indexStart + keyword.length && opened) {
+              highlighted += '</span>';
+              highlighted += original.slice(i + 1);
+              break;
+            }
+          }
+          div.innerHTML = highlighted + ' ' + ayahNumber;
+        } else {
+          div.innerHTML = original + ' ' + ayahNumber;
+        }
+      } else {
+        div.innerHTML = original + ' ' + ayahNumber;
+      }
+
+      container.appendChild(div);
+    });
+  }
+
+  // تنفيذ عملية البحث
+  function performSearch() {
+    const keyword = document.getElementById('searchInput').value.trim();
+    const searchAll = document.getElementById('searchAll').checked;
+    const resultsBox = document.getElementById('searchResults');
+    const resultsContainer = document.getElementById('resultsContainer');
+    resultsContainer.innerHTML = '';
+    resultsBox.style.display = 'none';
+
+    if (!keyword) return;
+
+    const results = [];
+
+    if (searchAll) {
+      quranData.forEach((sura, suraIndex) => {
+        sura.verses.forEach(verse => {
+          if (removeTashkeel(verse.text).includes(removeTashkeel(keyword))) {
+            results.push({ sura: sura.name, verseId: verse.id, text: verse.text, suraIndex });
+          }
+        });
+      });
+    } else {
+      const current = quranData[selectedSuraIndex];
+      current.verses.forEach(verse => {
+        if (removeTashkeel(verse.text).includes(removeTashkeel(keyword))) {
+          results.push({ sura: current.name, verseId: verse.id, text: verse.text, suraIndex: selectedSuraIndex });
+        }
+      });
+    }
+
+    if (results.length > 0) {
+      resultsBox.style.display = 'block';
+      results.forEach(res => {
+        const div = document.createElement('div');
+        div.className = 'result-item';
+        div.innerHTML = `[${res.sura} - آية ${res.verseId}] ${res.text}`;
+        div.onclick = () => {
+          document.getElementById('suraSelect').value = res.suraIndex;
+          selectedSuraIndex = res.suraIndex;
+          displaySura(res.suraIndex, keyword);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          resultsBox.style.display = 'none';
+        };
+        resultsContainer.appendChild(div);
+      });
+    } else {
+      resultsBox.style.display = 'block';
+      resultsContainer.innerHTML = '<p>لا توجد نتائج.</p>';
+    }
+  }
+
+  // إغلاق نتائج البحث
+  function closeResults() {
+    document.getElementById('searchResults').style.display = 'none';
+  }
+
+  // الوضع الليلي
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark');
+  }
+
+  // تغيير حجم الخط
+  function changeFontSize(change) {
+    currentFontSize += change * 0.1;
+    document.querySelectorAll('.ayah').forEach(div => {
+      div.style.fontSize = currentFontSize + 'rem';
+    });
+  }
+</script>
+
+
+</body>
+</html>

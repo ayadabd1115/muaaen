@@ -1,0 +1,124 @@
+/* يملأ الـ html و body الشاشة كاملةً */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f6f6f6;
+  color: #222;
+  text-align: center;
+}
+
+/* حاوية المحتوى الرئيسي */
+#appContent {
+  position: relative;
+  height: 100%;
+  overflow: auto;
+}
+
+/* الهيدر */
+.header {
+  
+  background-color: #034847;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    padding: 1rem;
+}
+
+/* عرض التاريخ */
+#dateDisplay {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+/* صندوق أوقات الصلاة */
+.prayer-times {
+  margin: 1rem;
+  padding: 1rem;
+  background: #eaeaea;
+  border-radius: 10px;
+}
+
+/* زر المعرض */
+.toggle-button {
+  margin-top: 1rem;
+  padding: 10px 20px;
+  font-size: 1rem;
+}
+
+/* قائمة الصفحات داخل المحتوى */
+.web-links {
+  display: none;    /* ظاهر/مخفي بالجافاسكربت */
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.web-links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 300px;
+}
+.web-links li {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+}
+.web-links li:hover {
+  background: #f0f0f0;
+}
+
+/* صندوق التذكير */
+.reminder-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #fff5c0;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #ccc;
+  display: none;
+  max-width: 300px;
+  z-index: 1000;
+}
+
+/* حاوية عرض الصفحة الداخلية (تظهر فوق كل شيء) */
+#pageView {
+  display: none;    /* بالجافاسكربت */
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  z-index: 1000;
+}
+
+/* زر الرجوع */
+#pageView #backButton {
+  position: absolute;
+  background: #1d1d338f;
+  bottom: 10px; left: 1px;
+  padding: 8px 12px;
+  width: inherit;
+  color: #ffffff;
+  font-size: 1rem;
+  z-index: 1003;
+  border: 1px solid #05cdde;
+}
+
+/* iframe يملأ كامل الحاوية */
+#pageView #webFrame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}

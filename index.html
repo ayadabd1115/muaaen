@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>المجاهد</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- المحتوى الرئيسي -->
+  <div id="appContent">
+    <div class="header">
+      <h1>معين المجاهد</h1>
+      <div id="dateDisplay"></div>
+      <label for="citySelect">اختر المدينة:</label>
+      <select id="citySelect"></select>
+    </div>
+    <div class="prayer-times" id="prayerTimes"></div>
+    <button onclick="toggleWebLinks()" class="toggle-button">📂 معرض الصفحات</button>
+    <div id="webLinks" class="web-links">
+      <ul>
+        <li onclick="openPage('quran.html')">📖 القرآن الكريم</li>
+
+        <li onclick="openPage('https://ar.lib.eshia.ir/10505/1/1')">📘 صفحة 1</li>
+        <li onclick="openPage('https://example2.com')">📗 صفحة 2</li>
+        <li onclick="openPage('https://example3.com')">📕 صفحة 3</li>
+        <li onclick="openPage('https://example4.com')">📙 صفحة 4</li>
+      </ul>
+    </div>
+    <div id="reminderBox" class="reminder-box">
+      <span id="reminderText"></span>
+      <button onclick="closeReminder()">❌</button>
+    </div>
+  </div>
+
+  <!-- حاوية عرض الصفحة داخل التطبيق -->
+  <div id="pageView">
+    <button id="backButton" onclick="closePage()">◀ رجوع</button>
+    <iframe id="webFrame" src=""></iframe>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

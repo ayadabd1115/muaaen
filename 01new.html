@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>استمارة نوع (1)</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0px;
+      
+      
+      height: 100%;
+      font-family: 'Arial', sans-serif;
+      background: #fff;
+      direction: rtl;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      text-align: center;
+      font-size: larger;
+      font-weight: bold;
+      border: 5px solid black; /* سمك ولون الإطار */
+      
+      box-sizing: border-box;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: url('form-bg.jpg') no-repeat center center;
+      background-size: 100% 100%;
+    }
+
+    label {
+    position: absolute;
+    font-size: 22pt;
+    font-weight: bold;
+    color: #000;
+    text-align: right;
+    right: 20px;
+    }
+
+    input {
+      position: absolute;
+      border: 1px solid #000;
+      background: transparent;
+      font-size: 16pt;
+      text-align: center;
+      padding: 4px;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      outline: none;
+    }
+
+    /* نسب الحقول بناءً على ورقة A4 بدقة 1126x1600 بكسل */
+    label[for="type"]         { top: 75px;  }
+    input#type                 { top: 80px; right: 200px; width: 500px; height: 40px; }
+
+    label[for="account"]      { top: 130px;  }
+    input#account              { top: 130px; right: 200px; width: 500px; height: 40px; }
+
+    label[for="serial"]       { top: 180px;  }
+    input#serial               { top: 180px; right: 200px; width: 500px; height: 40px; }
+
+    label[for="sub_no"]       { top: 230px;  }
+    input#sub_no               { top: 230px; right: 200px; width: 500px; height: 40px; }
+
+    label[for="sub_date"]     { top: 280px;  }
+    input#sub_date             { top: 280px; right: 200px; width: 500px; height: 40px; }
+
+    label[for="name"]         { top: 330px;  }
+    input#name                 { top: 330px; right: 200px; width: 500px; height: 40px; }
+
+    label[for="house_no"]     { top: 380px;  }
+    input#house_no             { top: 380px; right: 200px; width: 500px; height: 40px; }
+
+    label[for="alzaqqaq"]     { top: 430px;  }
+    input#alzaqqaq             { top: 430px; right: 200px; width: 500px; height: 40px; }
+
+    label[for="address"]      { top: 480px;  }
+    input#address              { top: 480px; right: 200px; width: 500px; height: 40px; }
+          
+    label[for="meter_no"]     { top: 530px;  }
+    input#meter_no             { top: 530px; right: 200px; width: 500px; height: 40px; }
+
+    label[for="floor"]        { top: 580px;  }
+    input#floor                { top: 580px; right: 200px; width: 500px; height: 40px; }
+
+    label[for="sector"]       { top: 630px;  }
+    input#sector               { top: 630px; right: 200px; width: 500px; height: 40px; }
+
+    label[for="class"]        { top: 690px;right: 5px;  }
+    input#class                { top: 690px; right: 85px; width: 150px; height: 40px; }
+
+    label[for="measure_type"] { top: 690px;right: 245px; }
+    input#measure_type         { top:690px; right: 360px; width: 150px; height: 40px; }
+
+    label[for="factor"]       { top: 690px;  right: 515px;}
+    input#factor               { top: 690px; right: 590px; width: 150px; height: 40px; }
+
+    label[for="cost"]         { top: 755px;right: 20px;  }
+    input#cost                 { top: 755px; right: 200px; width: 500px; height: 40px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 style=" font-size: x-large;   text-underline-offset: 10px;text-decoration-line: underline ;">أســتمــارة نوع (1) هـنـدســة الـمـشـاريـع</h2>
+    <input id="type" name="type" type="text">
+    <label for="type">النـــــوع</label>
+
+    <input id="account" name="account" type="text">
+    <label for="account">رقم الحساب</label>
+
+    <label for="serial">التسـلسـل</label>
+    <input id="serial" name="serial" type="text">
+
+    <label for="sub_no">رقم الاشتراك</label>
+    <input id="sub_no" name="sub_no" type="text">
+
+    <label for="sub_date">تاريخ الاشتراك</label>
+    <input id="sub_date" name="sub_date" type="text">
+
+    <label for="name">الاســـــم</label>
+    <input id="name" name="name" type="text">
+
+    <label for="house_no">رقم الدار</label>
+    <input id="house_no" name="house_no" type="text">
+
+    <label for="alzaqqaq">رقم الزقاق</label>
+    <input id="alzaqqaq" name="alzaqqaq" type="text">
+
+    <label for="address">العنـــوان</label>
+    <input id="address" name="address" type="text">
+
+    <label for="meter_no">رقم المقياس</label>
+    <input id="meter_no" name="meter_no" type="text">
+
+    <label for="floor">الطــــور</label>
+    <input id="floor" name="floor" type="text">
+
+    <label for="sector">القطــــاع</label>
+    <input id="sector" name="sector" type="text">
+
+    <label for="class">الصنـف</label>
+    <input id="class" name="class" type="text">
+
+    <label for="measure_type">نوع القياس</label>
+    <input id="measure_type" name="measure_type" type="text">
+
+    <label for="factor">المعامل</label>
+    <input id="factor" name="factor" type="text">
+
+    <label for="cost">كلفة المقياس</label>
+    <input id="cost" name="cost" type="text">
+
+    <p style="bottom: 90px;
+    position: absolute;right: 5%;">منظم الاستمارة</p>
+    <p style="bottom: 90px;
+    position: absolute;right: 35%;">مسؤول المراجعات</p>
+    <p style="bottom: 90px;
+    position: absolute;right: 70%;">مسؤول المبيعات</p>
+    <p style="bottom: 50px;
+    position: absolute;right: 69%;">م.  مزاحم خلف ثامر</p>
+  </div>
+</body>
+</html>
