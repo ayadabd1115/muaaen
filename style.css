@@ -29,15 +29,18 @@ html, body {
 /* عرض التاريخ */
 #dateDisplay {
   margin-top: 0.5rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 /* صندوق أوقات الصلاة */
 .prayer-times {
   margin: 1rem;
-  padding: 1rem;
-  background: #eaeaea9c;
-  border-radius: 10px;
+    padding: 1rem;
+    background: #eaeaea9c;
+    border-radius: 10px;
+    font-size: 150%;
+    font-weight: bold;
+    font-family: sans-serif;
 }
 
 /* زر المعرض */
@@ -60,7 +63,7 @@ html, body {
 .web-links {
   display: none;
     position: fixed;
-    /* top: 121px; */
+    top: 40%;
     left: 50%;
     width: max-content;
     transform: translateX(-50%);
@@ -71,7 +74,7 @@ html, body {
     color: black;
     font-weight: bold;
     font-size: 150%;
-    box-shadow: 0 0 24px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 63px rgba(20, 26, 38, 0.7);
 }
 .web-links ul {
   list-style: none;
