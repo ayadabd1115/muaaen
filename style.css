@@ -59,7 +59,7 @@ html, body {
 /* قائمة الصفحات داخل المحتوى */
 .web-links {
   display: none;
-    position: absolute;
+    position: fixed;
     /* top: 121px; */
     left: 50%;
     width: max-content;
