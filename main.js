@@ -4,7 +4,8 @@ let prayerData = {};  // سيحمل بيانات جميع المدن
 async function loadPrayerData() {
   const cities = [
     { name: "بغداد", file: "times_baghdad.json" },
-    { name: "نجف",   file: "times_najaf.json"   }
+    { name: "نجف",   file: "times_najaf.json"   },
+    { name: "الكوت",   file: "times_kut.json"   }
   ];
 
   const select = document.getElementById('citySelect');
@@ -148,7 +149,8 @@ const reminders = [
   "صِل رحمك اليوم ✉️",
   "اجعل لك ورداً من القرآن 📖",
   "تفقد جارك ولو برسالة 💬",
-  "صلِّ على محمد وآل محمد 💚"
+  "صلِّ على محمد وآل محمد 💚",
+  "ابو زهراء الطائي"
 ];
 
 function showReminder() {
